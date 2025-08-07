@@ -5,23 +5,24 @@ import {
   XAxis, YAxis, Tooltip, CartesianGrid, Legend, ResponsiveContainer
 } from "recharts";
 
+// This is the single source of truth for all charts
 const data = [
-  { name: "Jan", users: 400, sales: 240 },
-  { name: "Feb", users: 300, sales: 139 },
-  { name: "Mar", users: 200, sales: 980 },
-  { name: "Apr", users: 278, sales: 390 },
-  { name: "May", users: 189, sales: 480 },
+  { name: 'Jan', users: 840, sales: 12400, tasks: 150 },
+  { name: 'Feb', users: 1020, sales: 14700, tasks: 210 },
+  { name: 'Mar', users: 1300, sales: 16900, tasks: 280 },
+  { name: 'Apr', users: 1580, sales: 18600, tasks: 345 },
+  { name: 'May', users: 1735, sales: 19200, tasks: 400 },
 ];
 
-const pieData = [
-  { name: "Desktop", value: 45 },
-  { name: "Mobile", value: 35 },
-  { name: "Tablet", value: 20 },
-];
-
-const COLORS = ["#6366f1", "#10b981", "#f59e0b"];
+const COLORS = ["#6366f1", "#10b981", "#f59e0b", "#ec4899", "#8b5cf6"];
 
 const ChartsPage = () => {
+  // Generate data for the pie chart from the main data array
+  const pieChartData = data.map(entry => ({
+    name: entry.name,
+    value: entry.sales,
+  }));
+
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -59,15 +60,15 @@ const ChartsPage = () => {
         </ResponsiveContainer>
       </div>
 
-      {/* Pie Chart */}
+      {/* Pie Chart (now showing sales breakdown) */}
       <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow md:col-span-2">
         <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-          📊 User Devices (Pie Chart)
+          📊 Monthly Sales Breakdown
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
-              data={pieData}
+              data={pieChartData}
               dataKey="value"
               nameKey="name"
               cx="50%"
@@ -75,7 +76,7 @@ const ChartsPage = () => {
               outerRadius={100}
               label
             >
-              {pieData.map((_, index) => (
+              {pieChartData.map((_, index) => (
                 <Cell key={index} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>

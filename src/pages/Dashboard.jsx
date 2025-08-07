@@ -1,17 +1,35 @@
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar, PieChart, Pie, Cell
-} from 'recharts';
+import React from 'react';
 
 const data = [
-  { name: 'Jan', users: 840, sales: 12400 },
-  { name: 'Feb', users: 1020, sales: 14700 },
-  { name: 'Mar', users: 1300, sales: 16900 },
-  { name: 'Apr', users: 1580, sales: 18600 },
-  { name: 'May', users: 1735, sales: 19200 },
+  { name: 'Jan', users: 840, sales: 12400, tasks: 150 },
+  { name: 'Feb', users: 1020, sales: 14700, tasks: 210 },
+  { name: 'Mar', users: 1300, sales: 16900, tasks: 280 },
+  { name: 'Apr', users: 1580, sales: 18600, tasks: 345 },
+  { name: 'May', users: 1735, sales: 19200, tasks: 400 },
 ];
 
-const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
+const latestMonthUsers = data[data.length - 1].users;
+const previousMonthUsers = data[data.length - 2].users;
+const userGrowthPercentage = ((latestMonthUsers - previousMonthUsers) / previousMonthUsers) * 100;
+
+const cumulativeRevenue = data.reduce((sum, entry) => sum + entry.sales, 0);
+const latestMonthRevenue = data[data.length - 1].sales;
+const previousMonthRevenue = data[data.length - 2].sales;
+const revenueGrowthPercentage = ((latestMonthRevenue - previousMonthRevenue) / previousMonthRevenue) * 100;
+
+const latestMonthTasks = data[data.length - 1].tasks;
+const previousMonthTasks = data[data.length - 2].tasks;
+const tasksGrowthPercentage = ((latestMonthTasks - previousMonthTasks) / previousMonthTasks) * 100;
+
+const studentInfo = {
+  studentName: 'Priyam Kumar',
+  startDate: '28/01/2025',
+  domain: 'React JS',
+  stream: 'B.tech',
+  passingOutYear: '2026',
+  collegeName: 'MBM University Jodhpur',
+  batch: 'Batch Alpha',
+};
 
 const Dashboard = () => {
   return (
@@ -19,83 +37,61 @@ const Dashboard = () => {
 
       {/* Cards */}
       <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6 rounded-xl shadow-lg">
-        <h3 className="text-lg font-semibold mb-1">Total Users</h3>
-        <p className="text-4xl font-bold">8,475</p>
-        <p className="text-sm opacity-80 mt-1">↑ 12.5% from last month</p>
+        <h3 className="text-lg font-semibold mb-1">Latest Month Users</h3>
+        <p className="text-4xl font-bold">{latestMonthUsers.toLocaleString()}</p>
+        <p className="text-sm opacity-80 mt-1">
+          ↑ {userGrowthPercentage.toFixed(1)}% from last month
+        </p>
       </div>
 
       <div className="bg-gradient-to-r from-emerald-500 to-lime-500 text-white p-6 rounded-xl shadow-lg">
-        <h3 className="text-lg font-semibold mb-1">Monthly Revenue</h3>
-        <p className="text-4xl font-bold">₹1,92,000</p>
-        <p className="text-sm opacity-80 mt-1">↑ 18.1% this quarter</p>
+        <h3 className="text-lg font-semibold mb-1">Cumulative Revenue</h3>
+        <p className="text-4xl font-bold">₹{cumulativeRevenue.toLocaleString()}</p>
+        <p className="text-sm opacity-80 mt-1">
+          ↑ {revenueGrowthPercentage.toFixed(1)}% from last month
+        </p>
       </div>
 
       <div className="bg-gradient-to-r from-pink-500 to-red-500 text-white p-6 rounded-xl shadow-lg">
-        <h3 className="text-lg font-semibold mb-1">Tasks Completed</h3>
-        <p className="text-4xl font-bold">1,207</p>
-        <p className="text-sm opacity-80 mt-1">↑ 22.3% efficiency boost</p>
+        <h3 className="text-lg font-semibold mb-1">Latest Tasks Completed</h3>
+        <p className="text-4xl font-bold">{latestMonthTasks.toLocaleString()}</p>
+        <p className="text-sm opacity-80 mt-1">
+          ↑ {tasksGrowthPercentage.toFixed(1)}% efficiency boost
+        </p>
       </div>
 
-      {/* Line Chart */}
-      <div className="col-span-1 md:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">📈 User Growth Over Months</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="users" stroke="#6366f1" strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* Bar Chart */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">💰 Revenue by Month</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="sales" fill="#10b981" barSize={30} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* Pie Chart with Legend */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">📊 Revenue Breakdown</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={data}
-              dataKey="sales"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              label
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-
-        {/* Legend */}
-        <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
-          {data.map((entry, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <div
-                className="w-4 h-4 rounded"
-                style={{ backgroundColor: COLORS[index % COLORS.length] }}
-              />
-              <span className="text-gray-700 dark:text-gray-300">{entry.name}</span>
-            </div>
-          ))}
+      {/* Basic Information Section */}
+      <div className="col-span-1 md:col-span-2 xl:col-span-3 bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+        <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Basic Details</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-700 dark:text-gray-300">
+          <div>
+            <p className="font-semibold text-gray-500">Student Name</p>
+            <p className="text-lg font-medium">{studentInfo.studentName}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-500">Start Date</p>
+            <p className="text-lg font-medium">{studentInfo.startDate}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-500">Domain</p>
+            <p className="text-lg font-medium">{studentInfo.domain}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-500">Stream</p>
+            <p className="text-lg font-medium">{studentInfo.stream}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-500">Passing Out Year</p>
+            <p className="text-lg font-medium">{studentInfo.passingOutYear}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-500">College Name</p>
+            <p className="text-lg font-medium">{studentInfo.collegeName}</p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-500">Batch</p>
+            <p className="text-lg font-medium">{studentInfo.batch}</p>
+          </div>
         </div>
       </div>
     </div>
