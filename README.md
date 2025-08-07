@@ -1,12 +1,54 @@
-# React + Vite
+React Dashboard
+This is a personal dashboard project using modern web development tools. The project was created to practice and showcase skills in building a multi-page, responsive dashboard application.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Features
+Dashboard View: A landing page displaying key metrics and personal details.
 
-Currently, two official plugins are available:
+Users Table: A component to display user information in a tabular format.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Calendar View: An interactive calendar for scheduling and event visualization.
 
-## Expanding the ESLint configuration
+Kanban Board: A task management board with drag-and-drop functionality and local storage persistence.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Charts: Various charts for data visualization, including line, bar, and pie charts.
+
+Routing: Client-side navigation between different pages using React Router.
+
+Responsive Design: The layout is designed to be accessible and functional across various device sizes.
+
+Dark Mode: The application includes support for a dark theme.
+
+Technologies Used
+Vite: A build tool for a fast development experience.
+
+React: The core library for building the user interface.
+
+Tailwind CSS: A utility-first CSS framework for styling.
+
+recharts: A charting library for React.
+
+@fullcalendar/react: A component for the interactive calendar.
+
+@hello-pangea/dnd: A library for the drag-and-drop functionality in the kanban board.
+
+react-router-dom: For handling application routing.
+
+Getting Started
+To get the project up and running on your local machine, follow these steps:
+
+Clone the repository:
+
+git clone [your-repo-url]
+cd dashboarding
+
+Install dependencies:
+
+npm install
+
+Run the development server:
+
+npm run dev
+
+The application will be available at http://localhost:5173.
+
+Developed by Priyam Kumar.
